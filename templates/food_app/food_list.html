@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>食物列表--{{ title }}</title>
+    <style>
+        .box {
+            width: 150px;
+            height: 100px;
+            border: 10px solid red;
+            text-align: center;
+            box-shadow: 5px 5px 2px grey;
+        }
+
+        .title {
+            font-size: 30px;
+            font-weight: bold;
+            color: tomato;
+        }
+
+        .price::after {
+            content: "元";
+            color: grey;
+        }
+        .desc {
+            font-size: 14px;
+            color: #999;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% for food in food_list %}
+{#            填写,详情页, 对应的链接地址(路由地址)#}
+{#            人工查看详情页, 对应的地址, 原封不动拷贝; 硬编码 #}
+            
+{#            反向解析: 1. 先给每一个路由规则, 加一个名字! 2. 在模板内部, 就直接通过名字,动态解析出对应的路径#}
+            <a href="{% url 'food:food_detail' food.id %}" target="_blank">
+                <div class="box">
+                    <div class="title">{{ food.name }}</div>
+                    <div class="price">{{ food.price }}</div>
+                    <div class="desc">{{ food.desc }}</div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
