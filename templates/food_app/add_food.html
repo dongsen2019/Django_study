@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增菜品</title>
+</head>
+<body>
+    <form action="{% url 'food:save_food' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="food_name" placeholder="请输入菜品的名称"><br>
+        <input type="number" name="count" min="0" placeholder="请输入菜品的数量"><br>
+        <input type="number" name="price" min="0" step="0.01" placeholder="请输入价格"><br>
+        <textarea name="desc"></textarea><br>
+
+        <input type="submit" value="新增">
+    </form>
+</body>
+</html>

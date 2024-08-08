@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.shortcuts import HttpResponse
+from django.shortcuts import render, reverse
+from django.shortcuts import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from food_app.models import Food
 
@@ -25,6 +25,23 @@ def index(request):
     food.save()
 
     return HttpResponse(f'数据创建完成')
+
+
+def add_food(request):
+    return render(request, 'add_food.html')
+
+
+def save_food(request):
+    if request.method == "POST":
+        print(request.POST)
+        food_name = request.POST.get("food_name")
+        count = request.POST.get("count")
+        price = request.POST.get("price")
+        desc = request.POST.get("desc")
+
+        food = Food(name=food_name, count=count, price=price, desc=desc)
+        food.save()
+        return HttpResponseRedirect(reverse("food:food_list"))
 
 
 # 查询数据
