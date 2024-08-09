@@ -4,3 +4,5 @@
 #  python .\manage.py startapp food_app
 #  pip install mysqlclient 安装django与mysql交互的三方库
 #  pip install django-stubs 获得更好的django代码补全体验
+#  python .\manage.py makemigrations 生成模型数据迁移文件
+#  python .\manage.py migrate

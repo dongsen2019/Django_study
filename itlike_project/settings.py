@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'food_app',
+    'model_study_app',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'itlike_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates/food_app")],  # 添加HTML模板的目录, 以后django 找模板文件的时候, 检索路径
+        'DIRS': [os.path.join(BASE_DIR, "templates/")],  # 添加HTML模板的目录, 以后django 找模板文件的时候, 检索路径
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

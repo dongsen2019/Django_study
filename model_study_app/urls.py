@@ -5,5 +5,9 @@ from model_study_app.views import *
 urlpatterns = [
     # 固定路径路由, 不带动态参数设计方案
     path('', index, name='index'),
-
+    path('add/', add_model),
+    path('delete/', delete_model),
+    path('update/', update_model),
+    path('select/', select_model),
+    path('select_jsn', select_model_json)
 ]
