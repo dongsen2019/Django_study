@@ -24,7 +24,7 @@ class Course(models.Model):
     cover = models.ImageField("课程封面", upload_to='course')
     price = models.FloatField("课程价格")
     is_show = models.BooleanField("是否上架", default=False)
-    publish_time = models.DateTimeField("发布时间", auto_now_add=True) # 一旦我们指明了此字段是自动填充
+    publish_time = models.DateTimeField("发布时间", auto_now_add=True)  # 一旦我们指明了此字段是自动填充
     # 注意: amdin 系统里面,编辑/增加时 不要显示publish_time这个字段
 
     detail = models.TextField("课程详情")

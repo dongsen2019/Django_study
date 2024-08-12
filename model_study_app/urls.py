@@ -9,5 +9,5 @@ urlpatterns = [
     path('delete/', delete_model),
     path('update/', update_model),
     path('select/', select_model),
-    path('select_jsn', select_model_json)
+    path('select_jsn/', select_model_json)
 ]

@@ -86,7 +86,67 @@ def select_model(request):
 def select_model_json(request):
     # 如果在数据库中的字段是路径,需要在HTML模板的语法中添加.url后缀,
     # 这样系统会自动加上服务器地址的前缀
-    sel_all = User.objects.all()
-    to_jsn = list(sel_all.values())
 
+    # sel_all = User.objects.all()
+    # result = User.objects.filter(id__gt=2)
+    # result = User.objects.filter(pk__gt=2)  # 等价于id__gt=2 主键表达式
+    # result = User.objects.filter(pk=1)
+    # result = User.objects.filter(pk_exact=1) # 等价于pk=1
+
+    key_word = request.GET.get('kw', '')  # 字典的取值方法,取不到就取默认值''
+
+    # 以什么字符开始的匹配
+    # result = User.objects.filter(name__startswith=key_word)
+
+    # 包含什么字符的匹配 区分大小写
+    # result = User.objects.filter(name__contains=key_word)
+
+    # 包含什么字符的匹配 不区分大小写
+    # result = User.objects.filter(name__icontains=key_word)
+
+    # lt:小于 gt:大于 lte:小于等于 gte:大于等于
+
+    # in [1,3,5] range(18,35)
+    # result = User.objects.filter(id__in=[2, 3])
+    # result = User.objects.filter(id__range=(1, 3))
+
+    # 日期相关
+    import datetime
+    # result = Course.objects.filter(publish_time__year=2024)
+
+    # 利用datetime过滤月份为8的时间
+    # result = Course.objects.filter(publish_time__range=(datetime.date(2024, 8, 1), datetime.date(2024, 8, 31)))
+
+    # 正则表达式 __regex=r'^itlike[0-9]{3}$'
+
+    # 是否为空 __isnull __isnotnull
+
+    # 跨表查询
+    # result = Course.objects.filter(category__name='首页')
+
+    # 利用Q: Query 表达式多条件查询
+    from django.db.models import Q
+    result = Course.objects.filter(Q(cover__contains='m') & Q(price__exact=202.3))
+
+    # F表达式 Field
+    course = Course.objects.get(id=1)
+    course.price = course.price + 1
+    course.save()
+
+    # 等同于以下两条sql 的执行
+    # select price from Course where id = 4; 取到60
+    # update Course set price = (60 + 1) where id 4;
+
+    # 用一条sql实现的等价F表达式
+    # update Course set price = price + 1 where id 4;
+    from django.db.models import F
+    course = Course.objects.get(id=4)
+    course.price = F('price') + 1  # F表达式指取某个字段值
+    course.save()
+
+    to_jsn = list(result.values())
     return JsonResponse(to_jsn, safe=False)
+
+
+
+
