@@ -29,7 +29,7 @@ class Course(models.Model):
 
     detail = models.TextField("课程详情")
 
-    category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True, blank=True, verbose_name="所属分类")
+    category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True, blank=True, verbose_name="所属分类", related_name='course_list')
 
     # amdin系统操作变更数据时,显示的数据集名称,默认为数组[索引号]
     def __str__(self):

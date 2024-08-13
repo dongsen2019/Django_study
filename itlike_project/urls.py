@@ -26,4 +26,5 @@ urlpatterns = [
     path('url_study/', include('url_study_app.urls')),
     path('view_study/', include('view_study_app.urls')),
     path('model_study/', include('model_study_app.urls')),
+    path('template_study/', include('template_study_app.urls')),
 ]

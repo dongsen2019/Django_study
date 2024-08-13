@@ -148,5 +148,62 @@ def select_model_json(request):
     return JsonResponse(to_jsn, safe=False)
 
 
+def select_model_fk(request):
+    # 正向查询
+    course_list = Course.objects.all()
+    content = {
+        'course_list': course_list,
+    }
+
+    # 反向查询
+    category = Category.objects.get(id=1)
+    # 当模型引用外键时,在外键模型中自动创建 course_set 属性,且该属性=关联的模型表
+    # 当然也可以引用外键的模型中,使用related_name修改上述的属性名称
+    result = category.course_set.all().values()
+
+    return JsonResponse(list(result), safe=False)
+
+
+def agg_model(request):
+    from django.db.models import Avg, Min, Max, Sum
+
+    result = User.objects.all()
+    count = result.count()
+
+    avg_age = result.aggregate(Avg('age'))  # 聚合的字段数据 {'age__avg': 88}
+    max_age = result.aggregate(Min('age'))
+    min_age = result.aggregate(Max('age'))
+    sum_age = result.aggregate(Sum('age'))
+
+    return HttpResponse(f"结果测试: count: {count} max_age: {max_age} min_age: {min_age} avg_age: {avg_age} sum_age: {sum_age}")
+
+
+def ann_model(request):
+    # 注意记得引入专用的聚合函数
+    from django.db.models import Count, Sum, F
+    categories = Category.objects.all()
+    categories = categories.annotate(Count('course_list')).values()
+
+    # user = User.objects.all()
+    # user = user.annotate(Sum('age')).values()
+
+    return JsonResponse(list(categories), safe=False)
+
+
+def model_notice(request):
+    # orm 系统, 为了性能考虑, 实行机制:懒加载
+    # 你真正用到这个结果集的时候, 才会真正的从数据库表格当中,来获取数据
+    result = User.objects.all().order_by("-age")
+
+    # 此时才会真正加载
+    print(result)
+
+    # 立即加载,  延迟加载的问题
+    result = Course.objects.only("id", "name")
+
+    for i in result:
+        print(i.name,i.id)  # only立即加载到内存,其他字段如果不访问,不会加载到内存
+
+    return JsonResponse(list(result.values()), safe=False)
 
 
