@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+<!-- HTML 原生注释 -->
+{#单行注释: 下面是测试数据渲染 ! -> 这种注释, 不会被放到最终的渲染结果当中#}
+
+{% comment %}
+    多行注释
+    多行注释!
+{% endcomment %}
+
+{% comment %}
+    变量 {{ var }}
+    在函数内部可以调用方法,但是不能加小括号不能传参
+{% endcomment %}
+    <h1>测试数据上下文: {{ data.strip }} {{ data.upper }}</h1>
+
+    <hr>
+{# 模板语法使用的是.语法, 优先解析字典foo["bar"],然后是类的属性和方法foo.bar, 最后是数字索引foo[bar]#}
+    <h1>{{ dict_ps.name }} -- {{ dict_ps.age}}</h1>
+
+{# 如果变量名找不到,不会报错, 啥反应都没有#}
+    <h1>{{ person.name }} -- {{ person.age }}</h1>
+
+{# 列表使用,元素类似#}
+    <h1>{{ pets.0 }}--{{ pets.1 }}</h1>
+
+{# for 循环 #}
+    <ul>
+        {% for pet in pets %}
+            <li>{{ forloop.counter }} -- {{ pet }}</li>
+        {% endfor %}
+    </ul>
+    <hr>
+
+    <p>--------------展示多级菜单--------------</p>
+{#利用模型的反向查询,展示一二级分类目录#}
+    <ul>
+        {% for cate_one in category %}
+            <li>{{ forloop.counter }} -- {{ cate_one.name }}</li>
+            <ul>
+                {% for cate_two in cate_one.category_list.all %}
+                    <li>{{ forloop.counter }} -- {{ cate_two.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+
+    <hr>
+    <p>--------------if---------------</p>
+    {% if score < 60 %}
+        <span style="color: red">{{ score }}</span>
+    {% elif score >= 60 and score < 80 %}
+        <span style="color: blue">{{ score }}</span>
+    {% elif score >= 80  %}
+        <span style="color: blueviolet">{{ score }}</span>
+    {% endif %}
+</body>
+</html>

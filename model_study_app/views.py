@@ -6,7 +6,6 @@ from django.http import JsonResponse
 # Create your views here.
 
 
-
 def index(request):
     return HttpResponse("模型学习-首页")
 
@@ -122,7 +121,7 @@ def select_model_json(request):
     # 是否为空 __isnull __isnotnull
 
     # 跨表查询
-    # result = Course.objects.filter(category__name='首页')
+    result = Course.objects.filter(category__name='首页')
 
     # 利用Q: Query 表达式多条件查询
     from django.db.models import Q

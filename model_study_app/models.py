@@ -16,7 +16,7 @@ class Category(models.Model):
     # 如果是自关联, 那么这个模型, 可以直接, 写'self'
     # null: 数据库表结构当中, 字段值, 能否为null
     # blank: admin 管理系统当中,编辑/新增模型的时候, 做一个必填验证
-    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='category_list')
 
 
 class Course(models.Model):

@@ -61,7 +61,7 @@ def food_list(request):
 
     # 模拟使用: 模板T, 网页()
     foods = Food.objects.all().values()
-    return render(request, 'food_list.html', context={'title': "这是ds编写的", 'food_list': foods})
+    return render(request, 'food_app/food_list.html', context={'title': "这是ds编写的", 'food_list': foods})
     # 这里没有IDE提示: 原因: 我们仅仅在settings 告知django的查找路径
     # IDE 不知道, 所以没有提示! 运行时, 不会报错!
     # 顺便告诉IDE, 哪里才是模板根路径
