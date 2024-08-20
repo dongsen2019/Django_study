@@ -1,0 +1,57 @@
+在 Django 项目中，如果你发现模型设计有误并需要重新创建迁移文件，你可以按照以下步骤清理数据库中的迁移记录并重新生成迁移文件：
+
+步骤 1：撤销数据库中的迁移
+首先，撤销数据库中已应用的迁移，以回滚模型的更改。
+
+查看迁移状态：
+
+python manage.py showmigrations
+这将显示所有应用以及它们的迁移状态。
+
+撤销迁移：
+
+使用 python manage.py migrate app_name zero 命令将指定应用的所有迁移回滚到初始状态。
+
+
+python manage.py migrate your_app_name zero
+这个命令将删除数据库中由这些迁移创建的表及其相关的更改。
+
+步骤 2：删除迁移文件
+删除项目中 migrations 文件夹内的迁移文件，这些文件通常位于应用目录的 migrations 子目录中（例如 your_app_name/migrations/）。
+
+删除所有除了 __init__.py 以外的迁移文件。
+你可以手动删除这些文件，也可以通过命令行删除。
+
+bash
+复制代码
+rm your_app_name/migrations/0*.py
+步骤 3：清理数据库中的迁移记录
+在 Django 的数据库表 django_migrations 中，记录了所有已经应用的迁移。如果要完全清理某个应用的迁移记录，可以直接从数据库中删除对应的记录。
+
+进入数据库：
+
+bash
+复制代码
+python manage.py dbshell
+在数据库中删除迁移记录：
+
+sql
+复制代码
+DELETE FROM django_migrations WHERE app = 'your_app_name';
+这将删除数据库中记录的与该应用相关的所有迁移。
+
+步骤 4：重新生成迁移文件
+在清理完旧的迁移记录和文件后，可以重新生成新的迁移文件。
+
+创建新的迁移：
+
+bash
+复制代码
+python manage.py makemigrations
+应用新的迁移：
+
+bash
+复制代码
+python manage.py migrate
+总结
+通过这几个步骤，你可以清理 Django 应用的迁移记录并重新生成和应用新的迁移。此操作适用于开发阶段，在生产环境中应谨慎使用，避免数据丢失或破坏数据库的完整性。
