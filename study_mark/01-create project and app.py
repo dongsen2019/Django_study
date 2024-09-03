@@ -5,3 +5,4 @@
 #  pip install mysqlclient 安装django与mysql交互的三方库
 #  python .\manage.py makemigrations 生成模型数据迁移文件
 #  python .\manage.py migrate
+#  静态static路径千万记得要 /static 别忘了加前面的斜杠

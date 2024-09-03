@@ -22,8 +22,7 @@ python manage.py migrate your_app_name zero
 删除所有除了 __init__.py 以外的迁移文件。
 你可以手动删除这些文件，也可以通过命令行删除。
 
-bash
-复制代码
+
 rm your_app_name/migrations/0*.py
 步骤 3：清理数据库中的迁移记录
 在 Django 的数据库表 django_migrations 中，记录了所有已经应用的迁移。如果要完全清理某个应用的迁移记录，可以直接从数据库中删除对应的记录。
